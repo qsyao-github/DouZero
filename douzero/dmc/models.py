@@ -4,20 +4,23 @@ models into one class for convenience.
 """
 
 import numpy as np
-
+from kan import *
+torch.set_default_dtype(torch.float64)
 import torch
 from torch import nn
 
 class LandlordLstmModel(nn.Module):
     def __init__(self):
         super().__init__()
-        self.lstm = nn.LSTM(162, 128, batch_first=True)
+        """self.lstm = nn.LSTM(162, 128, batch_first=True)
         self.dense1 = nn.Linear(373 + 128, 512)
         self.dense2 = nn.Linear(512, 512)
         self.dense3 = nn.Linear(512, 512)
         self.dense4 = nn.Linear(512, 512)
         self.dense5 = nn.Linear(512, 512)
-        self.dense6 = nn.Linear(512, 1)
+        self.dense6 = nn.Linear(512, 1)"""
+        self.attn=nn.MultiheadAttention()
+        self.kan=KAN(width=[2,5,1], grid=3, k=3)
 
     def forward(self, z, x, return_value=False, flags=None):
         lstm_out, (h_n, _) = self.lstm(z)
