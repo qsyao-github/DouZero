@@ -19,8 +19,8 @@ class LandlordLstmModel(nn.Module):
         self.dense4 = nn.Linear(512, 512)
         self.dense5 = nn.Linear(512, 512)
         self.dense6 = nn.Linear(512, 1)"""
-        self.attn=nn.MultiheadAttention()
-        self.kan=KAN(width=[2,5,1], grid=3, k=3)
+        self.attn=nn.MultiheadAttention(60,4)
+        self.kan=KAN(width=[60,512,512,512,512,512,1], grid=3, k=3)
 
     def forward(self, z, x, return_value=False, flags=None):
         lstm_out, (h_n, _) = self.lstm(z)
